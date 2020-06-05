@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module ActiveRecord
-  module PostgresEnum
+  module LogDeleted
     module PostgreSQLAdapter
 
       def create_deleted_rows_table
