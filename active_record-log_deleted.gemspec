@@ -25,13 +25,10 @@ Gem::Specification.new do |spec|
   spec.executables   = spec.files.grep(%r{^exe/}) { |f| File.basename(f) }
   spec.require_paths = ["lib"]
 
-  # spec.add_development_dependency "factory_bot"
-  # spec.add_development_dependency "ffaker"
-  # spec.add_development_dependency "pry"
   spec.add_development_dependency "rake"
-  spec.add_development_dependency "rspec", "~> 3.0"
-  # spec.add_development_dependency "activesupport", ">= 5.2", "< 7.0"
-  # spec.add_development_dependency "pg", ">= 1.1"
+  spec.add_development_dependency "rspec"
+  spec.add_development_dependency "combustion"
 
   spec.add_runtime_dependency "activerecord", ">= 5.2", "< 7.0"
+  spec.add_runtime_dependency "pg"
 end
