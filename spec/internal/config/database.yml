@@ -1,0 +1,5 @@
+test:
+  adapter: postgresql
+  host: <%= ENV.fetch("POSTGRES_HOST", 'localhost') %>
+  port: 5432
+  database: log_deleted

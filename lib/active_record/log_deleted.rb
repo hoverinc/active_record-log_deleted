@@ -1,8 +1,15 @@
-require "active_record/log_deleted/version"
-require "active_record/log_deleted/configuration"
+# frozen_string_literal: true
+
+require "active_record"
+require "active_record/schema_dumper"
+require "active_record/connection_adapters/postgresql/schema_statements"
 require "active_record/connection_adapters/postgresql_adapter"
-require "active_record/log_deleted/postgresql_adapter"
-require "active_record/log_deleted/command_recorder"
+require "active_support/lazy_load_hooks"
+
+require 'active_record/log_deleted/version'
+require 'active_record/log_deleted/configuration'
+require 'active_record/log_deleted/postgresql_adapter'
+require 'active_record/log_deleted/command_recorder'
 
 module ActiveRecord
   module LogDeleted

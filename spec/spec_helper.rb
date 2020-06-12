@@ -1,8 +1,9 @@
 # frozen_string_literal: true
 
-require "bundler/setup"
+require "bundler"
 require "active_record/log_deleted"
 require "combustion"
+
 Combustion.initialize! :active_record
 
 require "rspec/rails"
