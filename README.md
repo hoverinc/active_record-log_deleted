@@ -27,9 +27,9 @@ To override defaults, add an initializer:
 ```ruby
 # config/initializers/active_record-log_deleted.rb
 ActiveRecord::LogDeleted.configure do |config|
-    config.deleted_rows_table_name = :deleted_rows
-    config.log_deleted_row_function_name = :log_deleted_row
-    config.log_deleted_row_trigger_name = :log_deleted_row_trigger
+  config.deleted_rows_table_name = :deleted_rows
+  config.log_deleted_row_function_name = :log_deleted_row
+  config.log_deleted_row_trigger_name = :log_deleted_row_trigger
 end
 ```
 
@@ -51,7 +51,7 @@ class CreateLogDeletedRowFunction < ActiveRecord::Migration[6.0]
 end
 ```
 
-### Create the deleted row trigger
+### Create a deleted row trigger
 ```ruby
 class CreateDeletedRowTrigger < ActiveRecord::Migration[6.0]
   def change
