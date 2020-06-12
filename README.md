@@ -1,8 +1,6 @@
 # ActiveRecord::LogDeleted
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/active_record/log_deleted`. To experiment with that code, run `bin/console` for an interactive prompt.
-
-TODO: Delete this and the text above, and describe your gem
+Our data team needs to have logs of deleted rows. To do this, we historically have copy pasted some raw SQL from migration to migration. This gem exposes methods in ActiveRecord migrations to create the deleted row triggers.
 
 ## Installation
 
@@ -22,7 +20,46 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+### Configuration
+
+To override defaults, add an initializer:
+
+```ruby
+# config/initializers/active_record-log_deleted.rb
+ActiveRecord::LogDeleted.configure do |config|
+    config.deleted_rows_table_name = :deleted_rows
+    config.log_deleted_row_function_name = :log_deleted_row
+    config.log_deleted_row_trigger_name = :log_deleted_row_trigger
+end
+```
+
+### Create the deleted rows table
+```ruby
+class CreateDeletedRowsTable < ActiveRecord::Migration[6.0]
+  def change
+    create_deleted_rows_table
+  end
+end
+```
+
+### Create the log deleted row function
+```ruby
+class CreateLogDeletedRowFunction < ActiveRecord::Migration[6.0]
+  def change
+    create_log_deleted_row_function
+  end
+end
+```
+
+### Create the deleted row trigger
+```ruby
+class CreateDeletedRowTrigger < ActiveRecord::Migration[6.0]
+  def change
+    create_deleted_row_trigger(:table_name)
+  end
+end
+```
+
 
 ## Development
 
