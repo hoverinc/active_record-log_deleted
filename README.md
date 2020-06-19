@@ -30,6 +30,7 @@ ActiveRecord::LogDeleted.configure do |config|
   config.deleted_rows_table_name = :deleted_rows
   config.log_deleted_row_function_name = :log_deleted_row
   config.log_deleted_row_trigger_name = :log_deleted_row_trigger
+  config.support_uuids = true
 end
 ```
 
