@@ -18,7 +18,7 @@ module ActiveRecord
     end
 
     def self.configure
-      yield(@configuration)
+      yield(configuration)
     end
   end
 end
