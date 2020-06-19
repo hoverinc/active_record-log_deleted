@@ -4,10 +4,11 @@ module ActiveRecord
   module LogDeleted
     module PostgreSQLAdapter
       def create_deleted_rows_table
+        old_primary_key_type = configuration.support_uuids ? :string : :bigint
         create_table deleted_rows_table_name do |t|
           t.datetime :created_at, comment: 'The datetime at which the record was created.'
           t.text :old_row_json, comment: 'JSON with the entire row that was hard deleted.'
-          t.string :primary_key, comment: 'The primary key of the row which was hard deleted.'
+          t.send old_primary_key_type, :primary_key, comment: 'The primary key of the row which was hard deleted.'
           t.string :table_name, limit: 255, comment: 'The table name from which the row was hard deleted.'
         end
       end
@@ -22,7 +23,7 @@ module ActiveRecord
             BEGIN
               INSERT INTO
                 deleted_rows(table_name, primary_key, old_row_json, created_at)
-                  VALUES (TG_TABLE_NAME, OLD.id::varchar, ROW_TO_JSON(OLD), now());
+                  VALUES (TG_TABLE_NAME, #{old_primary_key('OLD')}, ROW_TO_JSON(OLD), now());
               RETURN OLD;
             END;
           $$ LANGUAGE plpgsql;
@@ -30,7 +31,9 @@ module ActiveRecord
       end
 
       def drop_log_deleted_row_function
-        execute "DROP FUNCTION #{log_deleted_row_function_name};"
+        execute <<~SQL
+          DROP FUNCTION IF EXISTS #{log_deleted_row_function_name}();
+        SQL
       end
 
       def create_deleted_row_trigger(table_name)
@@ -46,6 +49,12 @@ module ActiveRecord
       end
 
       private
+
+      def old_primary_key(table)
+        value = "#{table}.id"
+        value += '::varchar' if configuration.support_uuids
+        value
+      end
 
       def log_deleted_row_trigger_name
         configuration.log_deleted_row_trigger_name
