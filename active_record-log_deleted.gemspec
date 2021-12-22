@@ -30,6 +30,6 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency "combustion"
   spec.add_development_dependency "rspec-rails"
 
-  spec.add_runtime_dependency "activerecord", ">= 5.2", "< 7.0"
+  spec.add_runtime_dependency "activerecord", ">= 5.2", "< 8.0"
   spec.add_runtime_dependency "pg"
 end
